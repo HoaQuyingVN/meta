@@ -1,0 +1,39 @@
+{
+  "name": "meta",
+  "version": "1.0.0",
+  "description": "A meta package manager for managing multiple package repositories",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "bin": {
+    "meta": "src/meta.cli.js",
+    "pmeta": "src/pmeta.cli.js"
+  },
+  "keywords": [
+    "meta",
+    "package",
+    "manager"
+  ],
+  "author": "Cotten",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^8.2.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HoaQuyingVN/meta"
+  },
+  "bugs": {
+    "url": "https://github.com/HoaQuyingVN/meta/issues"
+  },
+  "homepage": "https://github.com/HoaQuyingVN/meta#readme",
+  "_publishConfig": {
+    "registry": "https://bulls--naturemint.repl.co"
+  }
+}
