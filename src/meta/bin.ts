@@ -1,39 +1,30 @@
 #!/usr/bin/env node
 
-import * as commander from 'commander';
-import { install, uninstall, list } from './package';
+import chalk from 'chalk';
+import boxen from 'boxen';
+import fs from 'fs';
+import path from 'path';
 
-commander
-  .version('0.1.0')
-  .description('A meta package manager for managing multiple packages')
-  .name('meta')
-  .usage('<command> [options]');
+// Register commands
+const commands = [];
 
-commander
-  .command('install <packages...>')
-  .alias('i')
-  .description('Install one or more packages')
-  .option('-g, --global', 'Install packages globally')
-  .action((packages: string[], options: any) => {
-    install(packages, options.global);
-  });
+// Load subcommands from the 'subcommands' folder
+const subcommandsDir = path.join(__dirname, 'commands');
+const subcommandFiles = fs.readdirSync(subcommandsDir);
 
-commander
-  .command('uninstall <packages...>')
-  .alias('u')
-  .description('Uninstall one or more packages')
-  .option('-g, --global', 'Uninstall packages globally')
-  .action((packages: string[], options: any) => {
-    uninstall(packages, options.global);
-  });
+subcommandFiles.forEach(file => {
+  const subcommand = require(path.join(subcommandsDir, file));
+  commands.push(subcommand);
+});
 
-commander
-  .command('list')
-  .alias('ls')
-  .description('List installed packages')
-  .option('-g, --global', 'List global packages')
-  .action((options: any) => {
-    list(options.global);
-  });
+// Parse command line arguments
+const [,, commandName] = process.argv;
 
-commander.parse(process.argv);
+// Find and execute the command
+const command = commands.find(cmd => cmd.name === commandName);
+if (command) {
+  console.log(boxen(chalk.bold(command.description), { padding: 1 }));
+  command.execute();
+} else {
+  console.log(chalk.red('Command not found!'));
+}
