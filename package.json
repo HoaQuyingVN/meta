@@ -7,7 +7,7 @@
     "start": "node src/index.js"
   },
   "bin": {
-    "meta": "src/meta.cli.js",
+    "meta": "src/meta/bin.ts",
     "pmeta": "src/pmeta.cli.js"
   },
   "keywords": [
